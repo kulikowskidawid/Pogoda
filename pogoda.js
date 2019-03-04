@@ -16,6 +16,10 @@ class Pogoda {
     return responseData.current_observation
   } 
 
+  // Zmiana Miejscowości 
+changeLocation(city) {
+  this.city = city;
+}
 }
 
 
