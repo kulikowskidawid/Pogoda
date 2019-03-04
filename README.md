@@ -1,2 +1,2 @@
 # Pogoda
-Aplikacja Pogoda z wykorzystaniem OpenWeatherMap API 
+Aplikacja Pogoda z wykorzystaniem Weather Underground API 
