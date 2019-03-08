@@ -1,11 +1,11 @@
-// Inicjalizacja obiektu pogoda
+// Inicjalizacja obiektu weather
 
 // Inicjalizacja Local Storage 
 const storage = new Storage();
 // Pobranie zapisanej lokalizacji do obiektu weather location
 const weatherLocation = storage.getLocationData();
-// Inicjalizacja obiektu Pogoda
-const pogoda = new Pogoda(weatherLocation.name);
+// Inicjalizacja obiektu weather
+const weather = new Weather(weatherLocation.name);
 // Inicjalizacja obiektu UI
 const ui = new UI();
 

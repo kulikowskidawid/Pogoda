@@ -1,6 +1,6 @@
 // Uzyskany Klucz API z Wunderground cc557fbc884831f9
 
-// Deklaracja Klasy Pogoda z metodą contructor
+// Deklaracja Klasy Weather z metodą contructor
 class Weather {
   constructor(name) {
     this.apiKey = '814e389bec984aab982111118190703';
@@ -13,7 +13,7 @@ class Weather {
 
     const responseData = await response.json();
 
-    //Ustawienie aby funkcja return zwróciła informacje zawarte w "current_observation"
+    //Ustawienie aby funkcja return zwróciła informacje zawarte w json
     return responseData;
   } 
 
