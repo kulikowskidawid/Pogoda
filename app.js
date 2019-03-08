@@ -5,7 +5,7 @@ const storage = new Storage();
 // Pobranie zapisanej lokalizacji do obiektu weather location
 const weatherLocation = storage.getLocationData();
 // Inicjalizacja obiektu Pogoda
-const pogoda = new Pogoda(weatherLocation.city);
+const pogoda = new Pogoda(weatherLocation.name);
 // Inicjalizacja obiektu UI
 const ui = new UI();
 
@@ -13,13 +13,13 @@ document.addEventListener('DOMContentLoaded', getWeather);
 
 // Event Zmiany Lokalizacji
 document.getElementById('w-change-btn').addEventListener('click', (e) => {
-  const city = document.getElementById('city').value;
+  const name = document.getElementById('name').value;
 
 // Zmiana Lokalizacji
-weather.changeLocation(city);
+weather.changeLocation(name);
 
 //Ustaw Lokalizacje w Local Storage
-storage.setLocationData(city);
+storage.setLocationData(name);
 
 //pobierz i wyświetl Pogodę
   getWeather();
