@@ -1,0 +1,539 @@
+[
+  {
+    "__docId__": 0,
+    "kind": "file",
+    "name": "src/app.js",
+    "content": "/**\n * Inicjalizacja Local Storage \n * @public\n * @type {Storage}\n */\nconst storage = new Storage();\n\n/**\n * Pobranie zapisanej lokalizacji do obiektu weather location\n * @public\n * @type {String}\n */\nconst weatherLocation = storage.getLocationData();\n\n/**\n * Inicjalizacja obiektu weather\n * @public\n * @type {Weather}\n */\nconst weather = new Weather(weatherLocation.name);\n\n\n/**\n * Inicjalizacja obiektu weather\n * @public\n * @type {UI}\n */\nconst ui = new UI();\n\ndocument.addEventListener('DOMContentLoaded', getWeather);\n\n// Event Zmiany Lokalizacji\ndocument.getElementById('w-change-btn').addEventListener('click', (e) => {\n    const name = document.getElementById('name').value;\n\n    // Zmiana Lokalizacji\n    weather.changeLocation(name);\n\n    //Ustaw Lokalizacje w Local Storage\n    storage.setLocationData(name);\n\n    //pobierz i wyświetl Pogodę\n    getWeather();\n\n    // Zamknij  modal\n    $('#locModal').modal('hide');\n});\n\n/** \n * Funkcja Get Weather dla async getWeather \n * @public\n */\nfunction getWeather() {\n    weather.getWeather()\n        .then(results => {\n            ui.paint(results);\n        })\n        .catch(err => console.log(err));\n}",
+    "static": true,
+    "longname": "C:/Users/Dawid/Desktop/Projekt Do wysłania/src/app.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 1,
+    "kind": "variable",
+    "name": "storage",
+    "memberof": "src/app.js",
+    "static": true,
+    "longname": "src/app.js~storage",
+    "access": "public",
+    "export": false,
+    "importPath": "./src/app.js",
+    "importStyle": null,
+    "description": "Inicjalizacja Local Storage ",
+    "lineNumber": 6,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Storage"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 2,
+    "kind": "variable",
+    "name": "weatherLocation",
+    "memberof": "src/app.js",
+    "static": true,
+    "longname": "src/app.js~weatherLocation",
+    "access": "public",
+    "export": false,
+    "importPath": "./src/app.js",
+    "importStyle": null,
+    "description": "Pobranie zapisanej lokalizacji do obiektu weather location",
+    "lineNumber": 13,
+    "type": {
+      "nullable": null,
+      "types": [
+        "String"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 3,
+    "kind": "variable",
+    "name": "weather",
+    "memberof": "src/app.js",
+    "static": true,
+    "longname": "src/app.js~weather",
+    "access": "public",
+    "export": false,
+    "importPath": "./src/app.js",
+    "importStyle": null,
+    "description": "Inicjalizacja obiektu weather",
+    "lineNumber": 20,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Weather"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 4,
+    "kind": "variable",
+    "name": "ui",
+    "memberof": "src/app.js",
+    "static": true,
+    "longname": "src/app.js~ui",
+    "access": "public",
+    "export": false,
+    "importPath": "./src/app.js",
+    "importStyle": null,
+    "description": "Inicjalizacja obiektu weather",
+    "lineNumber": 28,
+    "type": {
+      "nullable": null,
+      "types": [
+        "UI"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 5,
+    "kind": "function",
+    "name": "getWeather",
+    "memberof": "src/app.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/app.js~getWeather",
+    "access": "public",
+    "export": false,
+    "importPath": "./src/app.js",
+    "importStyle": null,
+    "description": "Funkcja Get Weather dla async getWeather ",
+    "lineNumber": 53
+  },
+  {
+    "__docId__": 6,
+    "kind": "file",
+    "name": "src/pogoda.js",
+    "content": "\n\n/**\n * Klasa Weather z konstruktorem zawierajacym klusz i określającym nazwe lokalizacji na name\n */\nclass Weather {\t\n\n    /**\n     * Konstruktor ustalający nazwe lokalizacji na name\n\t * @public\n     * @param {name} location name\n     */\n    constructor(name) {\n\t\tthis.apiKey = '814e389bec984aab982111118190703';\n        this.name = name;\n    }\n\n   /**\n   * Metoda Async getWeather z fetch API do wyświetlania rezultatów w json\n   * @public\n   */\n    async getWeather() {\n\n        /**  response z fetch weather api - dynamiczne pobranie zasobów\n         * @type {String}\n         */\n        const response = await fetch(`https://api.apixu.com/v1/current.json?key=${this.apiKey}&q=${this.name}`);\n\n        /** zwróć data w formacie json\n         * @type {String}\n         */\n        const responseData = await response.json();\n\n        /**\n         * @return {responseData} zwrócenie data z api\n         */\n        return responseData;\n    }\n\n    /** \n\t * metoda dla ustalenia lokalizacji\n     * @param {name} location name\n     */\n    changeLocation(name) {\n        this.name = name;\n    }\n}",
+    "static": true,
+    "longname": "C:/Users/Dawid/Desktop/Projekt Do wysłania/src/pogoda.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 7,
+    "kind": "class",
+    "name": "Weather",
+    "memberof": "src/pogoda.js",
+    "static": true,
+    "longname": "src/pogoda.js~Weather",
+    "access": null,
+    "export": false,
+    "importPath": "./src/pogoda.js",
+    "importStyle": null,
+    "description": "Klasa Weather z konstruktorem zawierajacym klusz i określającym nazwe lokalizacji na name",
+    "lineNumber": 6,
+    "interface": false
+  },
+  {
+    "__docId__": 8,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "src/pogoda.js~Weather",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/pogoda.js~Weather#constructor",
+    "access": "public",
+    "description": "Konstruktor ustalający nazwe lokalizacji na name",
+    "lineNumber": 13,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "name"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "location",
+        "description": "name"
+      }
+    ]
+  },
+  {
+    "__docId__": 9,
+    "kind": "member",
+    "name": "apiKey",
+    "memberof": "src/pogoda.js~Weather",
+    "static": false,
+    "longname": "src/pogoda.js~Weather#apiKey",
+    "access": null,
+    "description": null,
+    "lineNumber": 14,
+    "undocument": true
+  },
+  {
+    "__docId__": 10,
+    "kind": "member",
+    "name": "name",
+    "memberof": "src/pogoda.js~Weather",
+    "static": false,
+    "longname": "src/pogoda.js~Weather#name",
+    "access": null,
+    "description": null,
+    "lineNumber": 15,
+    "undocument": true
+  },
+  {
+    "__docId__": 11,
+    "kind": "method",
+    "name": "getWeather",
+    "memberof": "src/pogoda.js~Weather",
+    "generator": false,
+    "async": true,
+    "static": false,
+    "longname": "src/pogoda.js~Weather#getWeather",
+    "access": "public",
+    "description": "Metoda Async getWeather z fetch API do wyświetlania rezultatów w json",
+    "lineNumber": 22
+  },
+  {
+    "__docId__": 12,
+    "kind": "method",
+    "name": "changeLocation",
+    "memberof": "src/pogoda.js~Weather",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/pogoda.js~Weather#changeLocation",
+    "access": null,
+    "description": "metoda dla ustalenia lokalizacji",
+    "lineNumber": 44,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "name"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "location",
+        "description": "name"
+      }
+    ]
+  },
+  {
+    "__docId__": 14,
+    "kind": "file",
+    "name": "src/storage.js",
+    "content": "/**\r\n * Klasa Dla local storage\r\n */\r\nclass Storage {\r\n\r\n    /**\r\n     * Konstruktor ustawiający domyślną lokalizacje\r\n\t * @public\r\n     */\r\n    constructor() {\r\n        /**\r\n         * @type {string}\r\n         */\r\n        this.name;\r\n\r\n        /**\r\n         * @type {string}\r\n         */\r\n        this.defaultName = 'zakopane';\r\n    }\r\n\r\n    /**\r\n     * metoda pobierająca i zwracająca lokalizacje z local storage gdy local storage jest pusta zwraca domyślną lokalizację \r\n     * @public\r\n     */\r\n    getLocationData() {\r\n        if (localStorage.getItem('name') === null) {\r\n            this.name = this.defaultName;\r\n        } else {\r\n            this.name = localStorage.getItem('name');\r\n        }\r\n\r\n        return {\r\n            name: this.name,\r\n        }\r\n    }\r\n\r\n    /**\r\n     * metoda zapisująca lokalizacje do local storage jako 'name' \r\n     * @public\r\n     * @param {name} location name\r\n     */\r\n    setLocationData(name) {\r\n        localStorage.setItem('name', name);\r\n    }\r\n}",
+    "static": true,
+    "longname": "C:/Users/Dawid/Desktop/Projekt Do wysłania/src/storage.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 15,
+    "kind": "class",
+    "name": "Storage",
+    "memberof": "src/storage.js",
+    "static": true,
+    "longname": "src/storage.js~Storage",
+    "access": null,
+    "export": false,
+    "importPath": "./src/storage.js",
+    "importStyle": null,
+    "description": "Klasa Dla local storage",
+    "lineNumber": 4,
+    "interface": false
+  },
+  {
+    "__docId__": 16,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "src/storage.js~Storage",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/storage.js~Storage#constructor",
+    "access": "public",
+    "description": "Konstruktor ustawiający domyślną lokalizacje",
+    "lineNumber": 10
+  },
+  {
+    "__docId__": 17,
+    "kind": "member",
+    "name": "defaultName",
+    "memberof": "src/storage.js~Storage",
+    "static": false,
+    "longname": "src/storage.js~Storage#defaultName",
+    "access": null,
+    "description": "",
+    "lineNumber": 19,
+    "type": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 18,
+    "kind": "method",
+    "name": "getLocationData",
+    "memberof": "src/storage.js~Storage",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/storage.js~Storage#getLocationData",
+    "access": "public",
+    "description": "metoda pobierająca i zwracająca lokalizacje z local storage gdy local storage jest pusta zwraca domyślną lokalizację ",
+    "lineNumber": 26
+  },
+  {
+    "__docId__": 19,
+    "kind": "member",
+    "name": "name",
+    "memberof": "src/storage.js~Storage",
+    "static": false,
+    "longname": "src/storage.js~Storage#name",
+    "access": null,
+    "description": null,
+    "lineNumber": 28,
+    "undocument": true
+  },
+  {
+    "__docId__": 21,
+    "kind": "method",
+    "name": "setLocationData",
+    "memberof": "src/storage.js~Storage",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/storage.js~Storage#setLocationData",
+    "access": "public",
+    "description": "metoda zapisująca lokalizacje do local storage jako 'name' ",
+    "lineNumber": 43,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "name"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "location",
+        "description": "name"
+      }
+    ]
+  },
+  {
+    "__docId__": 22,
+    "kind": "file",
+    "name": "src/ui.js",
+    "content": "/**\n * Klasa UI dla wyboru komponentów ktore chcemy wypełnić rezultatami\n */\nclass UI {\n    constructor() {\n        this.location = document.getElementById('w-location');\n        this.string = document.getElementById('w-string');\n        this.details = document.getElementById('w-details');\n        this.icon = document.getElementById('w-icon');\n        this.humidity = document.getElementById('w-humidity');\n        this.feelsLike = document.getElementById('w-feels-like');\n        this.cloud = document.getElementById('w-cloud');\n        this.wind = document.getElementById('w-wind');\n        this.country = document.getElementById('w-country');\n        this.localtime = document.getElementById('w-localtime');\n    }\n    // \n\n    /**\n     * Metoda paint która wypełni UI rezultatami z API\n     * @public\n\t * @param {weather} weather json\n     */\n    paint(weather) {\n\n        /**\n         * @type {string}\n         */\n        this.localtime.textContent = weather.location.localtime;\n        this.country.textContent = weather.location.country;\n        this.location.textContent = weather.location.name;\n        this.string.textContent = `${weather.current.temp_c} °C`;\n        this.icon.setAttribute('src', `http:${weather.current.condition.icon}`);\n        this.humidity.textContent = `Wilgotność Powietrza: ${weather.current.humidity}%`;\n        this.feelsLike.textContent = `Odczuwalna Temperatura: ${weather.current.feelslike_c} °C`;\n        this.cloud.textContent = `Zachmurzenie: ${weather.current.cloud}%`;\n        this.wind.textContent = `Wiatr: ${weather.current.wind_kph} km/h`;\n    }\n}",
+    "static": true,
+    "longname": "C:/Users/Dawid/Desktop/Projekt Do wysłania/src/ui.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 23,
+    "kind": "class",
+    "name": "UI",
+    "memberof": "src/ui.js",
+    "static": true,
+    "longname": "src/ui.js~UI",
+    "access": null,
+    "export": false,
+    "importPath": "./src/ui.js",
+    "importStyle": null,
+    "description": "Klasa UI dla wyboru komponentów ktore chcemy wypełnić rezultatami",
+    "lineNumber": 4,
+    "interface": false
+  },
+  {
+    "__docId__": 24,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "src/ui.js~UI",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/ui.js~UI#constructor",
+    "access": null,
+    "description": null,
+    "lineNumber": 5,
+    "undocument": true
+  },
+  {
+    "__docId__": 25,
+    "kind": "member",
+    "name": "location",
+    "memberof": "src/ui.js~UI",
+    "static": false,
+    "longname": "src/ui.js~UI#location",
+    "access": null,
+    "description": null,
+    "lineNumber": 6,
+    "undocument": true
+  },
+  {
+    "__docId__": 26,
+    "kind": "member",
+    "name": "string",
+    "memberof": "src/ui.js~UI",
+    "static": false,
+    "longname": "src/ui.js~UI#string",
+    "access": null,
+    "description": null,
+    "lineNumber": 7,
+    "undocument": true
+  },
+  {
+    "__docId__": 27,
+    "kind": "member",
+    "name": "details",
+    "memberof": "src/ui.js~UI",
+    "static": false,
+    "longname": "src/ui.js~UI#details",
+    "access": null,
+    "description": null,
+    "lineNumber": 8,
+    "undocument": true
+  },
+  {
+    "__docId__": 28,
+    "kind": "member",
+    "name": "icon",
+    "memberof": "src/ui.js~UI",
+    "static": false,
+    "longname": "src/ui.js~UI#icon",
+    "access": null,
+    "description": null,
+    "lineNumber": 9,
+    "undocument": true
+  },
+  {
+    "__docId__": 29,
+    "kind": "member",
+    "name": "humidity",
+    "memberof": "src/ui.js~UI",
+    "static": false,
+    "longname": "src/ui.js~UI#humidity",
+    "access": null,
+    "description": null,
+    "lineNumber": 10,
+    "undocument": true
+  },
+  {
+    "__docId__": 30,
+    "kind": "member",
+    "name": "feelsLike",
+    "memberof": "src/ui.js~UI",
+    "static": false,
+    "longname": "src/ui.js~UI#feelsLike",
+    "access": null,
+    "description": null,
+    "lineNumber": 11,
+    "undocument": true
+  },
+  {
+    "__docId__": 31,
+    "kind": "member",
+    "name": "cloud",
+    "memberof": "src/ui.js~UI",
+    "static": false,
+    "longname": "src/ui.js~UI#cloud",
+    "access": null,
+    "description": null,
+    "lineNumber": 12,
+    "undocument": true
+  },
+  {
+    "__docId__": 32,
+    "kind": "member",
+    "name": "wind",
+    "memberof": "src/ui.js~UI",
+    "static": false,
+    "longname": "src/ui.js~UI#wind",
+    "access": null,
+    "description": null,
+    "lineNumber": 13,
+    "undocument": true
+  },
+  {
+    "__docId__": 33,
+    "kind": "member",
+    "name": "country",
+    "memberof": "src/ui.js~UI",
+    "static": false,
+    "longname": "src/ui.js~UI#country",
+    "access": null,
+    "description": null,
+    "lineNumber": 14,
+    "undocument": true
+  },
+  {
+    "__docId__": 34,
+    "kind": "member",
+    "name": "localtime",
+    "memberof": "src/ui.js~UI",
+    "static": false,
+    "longname": "src/ui.js~UI#localtime",
+    "access": null,
+    "description": null,
+    "lineNumber": 15,
+    "undocument": true
+  },
+  {
+    "__docId__": 35,
+    "kind": "method",
+    "name": "paint",
+    "memberof": "src/ui.js~UI",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/ui.js~UI#paint",
+    "access": "public",
+    "description": "Metoda paint która wypełni UI rezultatami z API",
+    "lineNumber": 24,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "weather"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "weather",
+        "description": "json"
+      }
+    ]
+  },
+  {
+    "kind": "index",
+    "content": "# Pogoda\r\nAplikacja Pogoda z wykorzystaniem Apixu Weather API \r\n",
+    "longname": "C:\\Users\\Dawid\\Desktop\\Projekt Do wysłania\\README.md",
+    "name": "./README.md",
+    "static": true,
+    "access": "public"
+  },
+  {
+    "kind": "packageJSON",
+    "content": "",
+    "longname": "",
+    "name": "",
+    "static": true,
+    "access": "public"
+  }
+]
